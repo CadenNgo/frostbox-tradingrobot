@@ -1,0 +1,26 @@
+configuration:
+  status: warn
+  appenders:
+    Console:
+      name: ConsoleAppender
+      target: SYSTEM_OUT
+      PatternLayout:
+        pattern: "%d{dd-MM-yyyy HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
+    File:
+      name: FileAppender
+      fileName: "application.log"
+      immediateFlush: true
+      PatternLayout:
+        pattern: "%d{dd-MM-yyyy HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
+  loggers:
+    root:
+      level: info
+      AppenderRef:
+        - ref: ConsoleAppender
+        - ref: FileAppender
+    com.frostbox: 
+      level: debug
+      additivity: false
+      AppenderRef:
+        - ref: ConsoleAppender
+        - ref: FileAppender

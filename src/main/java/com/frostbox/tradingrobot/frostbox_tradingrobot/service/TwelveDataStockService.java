@@ -17,13 +17,19 @@ public class TwelveDataStockService {
 
     private final String twelveDataBaseUrl = "https://api.twelvedata.com";
 
-    public Optional<Object> getRealTimePrice(String symbol)
-    {
-        Object response = apiBuilder.setUrl(twelveDataBaseUrl + "/price")
-                    .setHeaders("Authorization", "apikey "+apikey)
+    public Optional<Object> getRealTimePrice(String symbol) {
+        try {
+            Object response = apiBuilder.setUrl(twelveDataBaseUrl + "/price")
+                    .setHeaders("Authorization", "apikey " + apikey)
                     .setUrlParams("symbol", symbol)
                     .getMethod();
-                    
-        return Optional.of(response);
+
+            return Optional.of(response);
+        } 
+        catch (Exception e) {
+            
+            
+            return null;
+        }
     }
 }
