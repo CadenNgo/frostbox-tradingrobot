@@ -5,25 +5,20 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.frostbox.tradingrobot.model.StockInfo;
-
 import jakarta.annotation.PostConstruct;
 
 @Component
 public class TradingBotRunner {
 
     @Autowired
-    private YahooStockService yahooStockService;
+    private TwelveDataStockService twelveDataService;
 
     @PostConstruct
     public void startBot(){
 
-        String symbol = "INTC";
-        Optional<StockInfo> stock = yahooStockService.getStockInfo(symbol);
+        String symbol = "AAPL";
+        Optional<Object> test = twelveDataService.getRealTimePrice(symbol);
 
-        stock.ifPresent(info -> {
-            System.out.println(info.getSymbol() + ":" + info.getPrice());
-        });
+        System.out.println(test);
     }
-    
 }
