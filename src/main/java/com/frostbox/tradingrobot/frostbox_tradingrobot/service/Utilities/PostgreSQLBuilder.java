@@ -15,12 +15,22 @@ public class PostgreSQLBuilder {
 
     @Transactional
     public <T> T insertIntoDatabase(T entity) {
-        try {
-            entityManager.persist(entity); // directly save
-            return entity;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+    try {
+        if (entity instanceof Object[] array) { // handle arrays
+            for (Object obj : array) {
+                entityManager.merge(obj);
+            }
+        } else if (entity instanceof Iterable) { // handle List, Set, etc.
+            for (Object obj : (Iterable<?>) entity) {
+                entityManager.merge(obj);
+            }
+        } else { // single object
+            entityManager.merge(entity);
         }
+        return entity;
+    } catch (Exception e) {
+        e.printStackTrace();
+        return null;
     }
+}
 }

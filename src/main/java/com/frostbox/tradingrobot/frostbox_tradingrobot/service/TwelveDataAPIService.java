@@ -31,7 +31,6 @@ public class TwelveDataAPIService {
         try {
             Object response = apiBuilder.setUrl(twelveDataBaseUrl + "/stocks")
                     .setHeaders("Authorization", "apikey " + apikey)
-                    .setUrlParams("symbol", "AAPL")
                     .getMethod();
             
             TwelveStockData[] twelveDataStockArray = objectMapper.convertValue(response, TwelveStockData[].class);
