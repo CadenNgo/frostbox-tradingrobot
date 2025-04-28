@@ -1,8 +1,10 @@
-package com.frostbox.tradingrobot.frostbox_tradingrobot.service;
+package com.frostbox.tradingrobot.frostbox_tradingrobot.service.Utilities;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
+@Service
 public class LogBuilder {
 
     private static final Logger logger = LoggerFactory.getLogger(LogBuilder.class);

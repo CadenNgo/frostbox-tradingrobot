@@ -1,10 +1,12 @@
-package com.frostbox.tradingrobot.frostbox_tradingrobot.service;
+package com.frostbox.tradingrobot.frostbox_tradingrobot.service.Utilities;
 
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -59,16 +61,17 @@ public class RestAPIBuilder {
 
             HttpHeaders httpHeaders = new HttpHeaders();
             headers.forEach(httpHeaders::set);
-
+ 
             HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
 
-            ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
+            ResponseEntity<Map<String, Object>> response = restTemplate.exchange(uri, HttpMethod.GET, entity, new ParameterizedTypeReference<Map<String, Object>>(){});
 
-            return response.getBody();
+            return Optional.ofNullable(response.getBody())  
+                .map(map -> map.get("data"))
+                .orElse(null); 
+
         } catch (Exception e) {
-
             logging.error(e.toString());
-
             return null;
         }
     }
